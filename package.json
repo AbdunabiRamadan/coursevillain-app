@@ -1,0 +1,32 @@
+{
+  "name": "coursevillain",
+  "main": "app.js",
+  "engines": {
+    "node": "8.9.4"
+  },
+  "scripts": {
+    "start": "electron .",
+    "pack:osx": "electron-packager . --out=dist/osx --platform=darwin --arch=x64 --icon=buildResources/mac/icon.icns --overwrite",
+    "pack:win64": "electron-packager . --out=dist/win --platform=win32 --arch=x64 --icon=buildResources/win/icon.ico --config=buildResources/win/builder.json --overwrite",
+    "build": "npm run pack:osx && npm run pack:win64"
+  },
+  "build": {
+    "appId": "com.coursevillain",
+    "productName": "CourseVillain",
+    "mac": {
+      "category": "public.coursevillain"
+    },
+    "protocols": {
+      "name": "coursevillain-protocol",
+      "schemes": [
+        "coursevillain"
+      ]
+    }
+  },
+  "dependencies": {},
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^9.0.5"
+  }
+}
