@@ -23,7 +23,10 @@
       ]
     }
   },
-  "dependencies": {},
+  "dependencies": {
+    "moment": "^2.27.0",
+    "puppeteer-firefox": "^0.5.1"
+  },
   "author": "",
   "license": "MIT",
   "devDependencies": {
