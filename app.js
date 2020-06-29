@@ -1,6 +1,7 @@
 const { app, BrowserWindow, dialog } = require('electron');
 
 var win;
+var loaded = false;
 var baseUrl = "https://course-villain.herokuapp.com";
 var mainUrl = baseUrl;
 
@@ -20,17 +21,20 @@ function createWindow () {
 
     // Check if content loaded succesfully
     win.webContents.on("did-finish-load", function() {
+      loaded = true; // Set page as loaded so it doesn't get closed by an error later on
       win.focus(); // Focus window for user
       win.show(); // Un-hide window
     });
 
     // Check if content failed loading
     win.webContents.on("did-fail-load", function() {
-      dialog.showMessageBox({
-        buttons: ["OK"],
-        message: "CourseVillain appears to be down, so the app will not be able to load. Please try again later."
-      });
-      app.quit();
+      if (!loaded) {
+        dialog.showMessageBox({
+          buttons: ["OK"],
+          message: "CourseVillain appears to be down, so the app will not be able to load. Please try again later."
+        });
+        app.quit();
+      }
     });
 }
 
