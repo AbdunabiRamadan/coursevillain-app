@@ -1,6 +1,6 @@
 # CourseVillain
 
-This is the repository for the CourseVillain Windows and Mac application.
+This is the repository for the Windows and Mac application portion of CourseVillain. This portion loads the website and runs the automatic filling of the copyright infringement form.
 
 CourseVillain is a tool for professors and students at ERAU to use if they are running a course or are building a course. It does two things:
 
