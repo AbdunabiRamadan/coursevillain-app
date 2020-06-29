@@ -1,4 +1,5 @@
 const { app, BrowserWindow, dialog } = require('electron');
+const autoFormFilling = require('./autoFormFilling');
 
 var win;
 var loaded = false;
@@ -52,9 +53,30 @@ app.on('will-finish-launching', () => {
 });
 
 function handleProtocolLink(link) {
-  var tempUrl = baseUrl + link.replace('coursevillain://','');
-  if (win) win.loadURL(tempUrl);
-  mainUrl = tempUrl;
+  link = link.replace('coursevillain://',''); // Remove protocol from link
+
+  if (link.includes("autoFormFilling")) {
+    var data = Object.fromEntries(new URLSearchParams(link.replace('/autoFormFilling?', ''))); // Turn link params into object
+
+    // Initiate auto-form filling
+    autoFormFilling.asyncPuppeteer(data.docURL, data.docName, data.docType, data.userName, data.userRelationship, data.userEmail, function (err) {
+      if (err) {
+        dialog.showMessageBox({
+          buttons: ["OK"],
+          message: "The form did not submit. The following error occurred while automatically filling out the form:\n\n" + err
+        });
+      } else {
+        dialog.showMessageBox({
+          buttons: ["OK"],
+          message: "The form was submitted successfully."
+        });
+      }
+    });
+  } else {
+    var tempUrl = baseUrl + link;
+    if (win) win.loadURL(tempUrl);
+    mainUrl = tempUrl;
+  }
 }
 
 app.setAsDefaultProtocolClient('coursevillain');
