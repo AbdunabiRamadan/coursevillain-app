@@ -1,7 +1,7 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, dialog } = require('electron');
 
 var win;
-var baseUrl = "http://course-villain.herokuapp.com";
+var baseUrl = "https://course-villain.herokuapp.com";
 var mainUrl = baseUrl;
 
 // Todo upon startup
@@ -17,8 +17,21 @@ function createWindow () {
 
     win.maximize(); // Maximize window
     win.loadURL(mainUrl); // Load the URL, whether it be app startup (home page) or protocol (email verification)
-    win.focus(); // Focus window for user
-    win.show(); // Un-hide window
+
+    // Check if content loaded succesfully
+    win.webContents.on("did-finish-load", function() {
+      win.focus(); // Focus window for user
+      win.show(); // Un-hide window
+    });
+
+    // Check if content failed loading
+    win.webContents.on("did-fail-load", function() {
+      dialog.showMessageBox({
+        buttons: ["OK"],
+        message: "CourseVillain appears to be down, so the app will not be able to load. Please try again later."
+      });
+      app.quit();
+    });
 }
 
 // Protocol link catching (coursevillain:// URLs)
