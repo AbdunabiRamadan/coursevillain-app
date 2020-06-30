@@ -1,14 +1,14 @@
 const { app, BrowserWindow, dialog, shell } = require('electron');
 const autoFormFilling = require('./autoFormFilling');
 
-var win;
+var mainWindow;
 var loaded = false;
 var baseUrl = "https://course-villain.herokuapp.com";
 var mainUrl = baseUrl;
 
 // Todo upon startup
 function createWindow () {
-    win = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         title: "CourseVillain",
         autoHideMenuBar: true,
         useContentSize: true,
@@ -17,18 +17,18 @@ function createWindow () {
         frame: false // Make Windows window pretty
     });
 
-    win.maximize(); // Maximize window
-    win.loadURL(mainUrl); // Load the URL, whether it be app startup (home page) or protocol (email verification)
+    mainWindow.maximize(); // Maximize window
+    mainWindow.loadURL(mainUrl); // Load the URL, whether it be app startup (home page) or protocol (email verification)
 
     // Check if content loaded succesfully
-    win.webContents.on("did-finish-load", function() {
+    mainWindow.webContents.on("did-finish-load", function() {
       loaded = true; // Set page as loaded so it doesn't get closed by an error later on
-      win.focus(); // Focus window for user
-      win.show(); // Un-hide window
+      mainWindow.focus(); // Focus window for user
+      mainWindow.show(); // Un-hide window
     });
 
     // Check if content failed loading
-    win.webContents.on("did-fail-load", function() {
+    mainWindow.webContents.on("did-fail-load", function() {
       if (!loaded) {
         dialog.showMessageBox({
           buttons: ["OK"],
@@ -39,7 +39,7 @@ function createWindow () {
     });
 
     // Catches external links being opened and redirects them to user's browser
-    win.webContents.on('new-window', function(e, url) {
+    mainWindow.webContents.on('new-window', function(e, url) {
       e.preventDefault();
       if (!url.includes(baseUrl)) shell.openExternal(url);
     });
@@ -80,7 +80,7 @@ function handleProtocolLink(link) {
     });
   } else {
     var tempUrl = baseUrl + link;
-    if (win) win.loadURL(tempUrl);
+    if (mainWindow) mainWindow.loadURL(tempUrl);
     mainUrl = tempUrl;
   }
 }
