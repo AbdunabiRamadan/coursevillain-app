@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog } = require('electron');
+const { app, BrowserWindow, dialog, shell } = require('electron');
 const autoFormFilling = require('./autoFormFilling');
 
 var win;
@@ -36,6 +36,12 @@ function createWindow () {
         });
         app.quit();
       }
+    });
+
+    // Catches external links being opened and redirects them to user's browser
+    win.webContents.on('new-window', function(e, url) {
+      e.preventDefault();
+      if (!url.includes(baseUrl)) shell.openExternal(url);
     });
 }
 
