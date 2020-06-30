@@ -5,6 +5,7 @@ var mainWindow;
 var loaded = false;
 var baseUrl = "https://course-villain.herokuapp.com";
 var mainUrl = baseUrl;
+const singleInstanceLock = app.requestSingleInstanceLock();
 
 // Todo upon startup
 function createWindow () {
@@ -87,4 +88,16 @@ function handleProtocolLink(link) {
 
 app.setAsDefaultProtocolClient('coursevillain');
 
-app.whenReady().then(createWindow); // Start electron app
+if (!singleInstanceLock) {
+  app.quit(); // Quit any additional instances opened. Below code catches additional instance.
+} else {
+  // Catch any additional instances of app that are created
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore() // Restore window if minimized
+      mainWindow.focus() // Focus window
+    }
+  });
+
+  app.whenReady().then(createWindow); // Start first instance of electron app
+}
