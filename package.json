@@ -1,12 +1,14 @@
 {
   "name": "coursevillain",
-  "author": "Jack Grant",
+  "author": "Embry-Riddle Aeronautical University",
   "contributors": [
-    "Leonard Brunotte",
-    "Tyler Carr"
+    "Jack Grant",
+    "Tim",
+    "Tyler Carr",
+    "Leonard Brunotte"
   ],
   "description": "CourseVillain is a tool for professors and students at ERAU to use if they are running a course or are building a course to scrape the Course Hero website for ERAU content of a specific course and automate submission of the copyright infringement form.",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "main": "app.js",
   "engines": {
     "node": "8.9.4"
