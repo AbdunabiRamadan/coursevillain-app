@@ -7,8 +7,8 @@
   },
   "scripts": {
     "start": "electron .",
-    "pack:osx": "electron-packager . CourseVillain --out=dist/osx --platform=darwin --arch=x64 --icon=buildResources/mac/icon.icns --overwrite",
-    "pack:win64": "electron-packager . CourseVillain --out=dist/win --platform=win32 --arch=x64 --icon=buildResources/win/icon.ico --config=buildResources/win/builder.json --overwrite",
+    "pack:osx": "electron-packager . CourseVillain --out=../CVDist --platform=darwin --arch=x64 --icon=buildResources/mac/icon.icns --overwrite",
+    "pack:win64": "electron-packager . CourseVillain --out=../CVDist --platform=win32 --arch=x64 --icon=buildResources/win/icon.ico --config=buildResources/win/builder.json --overwrite",
     "build": "npm run pack:osx && npm run pack:win64"
   },
   "build": {
