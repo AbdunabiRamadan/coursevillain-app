@@ -15,7 +15,7 @@ function createWindow () {
         useContentSize: true,
         show: false, // Hide while loading content
         titleBarStyle: 'hiddenInset', // Make Mac window pretty
-        frame: false // Make Windows window pretty
+        frame: true // Add frame around Windows window
     });
 
     mainWindow.maximize(); // Maximize window
