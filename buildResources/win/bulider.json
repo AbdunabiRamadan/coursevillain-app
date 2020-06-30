@@ -1,7 +1,0 @@
-{
-    "win" : {
-      "title" : "CourseVillain",
-      "icon" : "./icon.ico",
-      "nsiTemplate" : "./installer.nsi.tpl"
-    }
-  }

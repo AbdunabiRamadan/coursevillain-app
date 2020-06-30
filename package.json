@@ -1,5 +1,11 @@
 {
   "name": "coursevillain",
+  "author": "Jack Grant",
+  "contributors": [
+    "Leonard Brunotte",
+    "Tyler Carr"
+  ],
+  "description": "CourseVillain is a tool for professors and students at ERAU to use if they are running a course or are building a course to scrape the Course Hero website for ERAU content of a specific course and automate submission of the copyright infringement form.",
   "version": "0.1.1",
   "main": "app.js",
   "engines": {
@@ -7,13 +13,15 @@
   },
   "scripts": {
     "start": "electron .",
-    "pack:osx": "electron-packager . CourseVillain --out=../CVDist --platform=darwin --arch=x64 --icon=buildResources/mac/icon.icns --overwrite",
-    "pack:win64": "electron-packager . CourseVillain --out=../CVDist --platform=win32 --arch=x64 --icon=buildResources/win/icon.ico --config=buildResources/win/builder.json --overwrite",
-    "build": "npm run pack:osx && npm run pack:win64"
+    "pack:macos": "electron-packager . CourseVillain --out=../CVDist --platform=darwin --arch=x64 --icon=buildResources/mac/icon.icns --overwrite",
+    "pack:win32": "electron-packager . CourseVillain --out=../CVDist --platform=win32 --arch=ia32 --icon=buildResources/win/icon.ico --overwrite",
+    "pack:win64": "electron-packager . CourseVillain --out=../CVDist --platform=win32 --arch=x64 --icon=buildResources/win/icon.ico --overwrite",
+    "build": "npm run pack:macos && npm run pack:win32 && npm run pack:win64"
   },
   "build": {
     "appId": "com.coursevillain",
     "productName": "CourseVillain",
+    "copyright": "Copyright © 2020 CourseVillain",
     "mac": {
       "category": "public.coursevillain"
     },
@@ -28,9 +36,9 @@
     "moment": "^2.27.0",
     "puppeteer-firefox": "^0.5.1"
   },
-  "author": "",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^9.0.5"
+    "electron": "^9.0.5",
+    "electron-packager": "^15.0.0"
   }
 }
