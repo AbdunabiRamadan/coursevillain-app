@@ -46,17 +46,13 @@ function createWindow () {
     });
 }
 
-// Protocol link catching (coursevillain:// URLs)
+// Protocol link catching on Mac
 app.on('will-finish-launching', () => {
   // Mac
   app.on('open-url', function (event, link) {
     event.preventDefault();
     handleProtocolLink(link);
   });
-  // Windows
-  process.argv.forEach(arg => {
-    if (/coursevillain:\/\//.test(arg)) handleProtocolLink(arg);
-  })
 });
 
 function handleProtocolLink(link) {
@@ -86,16 +82,18 @@ function handleProtocolLink(link) {
   }
 }
 
-app.setAsDefaultProtocolClient('coursevillain');
+app.setAsDefaultProtocolClient('coursevillain'); // Set protocol link (coursevillain://)
 
 if (!singleInstanceLock) {
   app.quit(); // Quit any additional instances opened. Below code catches additional instance.
 } else {
   // Catch any additional instances of app that are created
-  app.on('second-instance', (event, commandLine, workingDirectory) => {
+  app.on('second-instance', (event, argv, workingDirectory) => {
     if (mainWindow) {
       if (mainWindow.isMinimized()) mainWindow.restore() // Restore window if minimized
       mainWindow.focus() // Focus window
+
+      if (process.platform == 'win32') handleProtocolLink(argv.filter(arg => arg.includes("coursevillain:///"))[0]); // Protocol link catching on Windows
     }
   });
 
