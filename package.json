@@ -10,6 +10,10 @@
   "description": "CourseVillain is a tool for professors and students at ERAU to use if they are running a course or are building a course to scrape the Course Hero website for ERAU content of a specific course and automate submission of the copyright infringement form.",
   "version": "0.1.0",
   "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/CourseVillain/coursevillain-app.git"
+  },
   "engines": {
     "node": "8.9.4"
   },
