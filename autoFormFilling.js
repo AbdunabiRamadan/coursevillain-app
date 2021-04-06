@@ -1,4 +1,4 @@
-const {BrowserWindow, app} = require("electron");
+const {BrowserWindow, app, dialog} = require("electron");
 const pie = require("puppeteer-in-electron");
 const puppeteer = require("puppeteer-core");
 
