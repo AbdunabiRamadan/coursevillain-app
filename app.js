@@ -19,19 +19,36 @@ function createWindow () {
         title: "CourseVillain",
         autoHideMenuBar: true,
         useContentSize: true,
-        show: false, // Hide while loading content
+        show: false,
         titleBarStyle: 'hiddenInset', // Make Mac window pretty
         frame: true // Add frame around Windows window
     });
-
-    mainWindow.maximize(); // Maximize window
     mainWindow.loadURL(mainUrl); // Load the URL, whether it be app startup (home page) or protocol (email verification)
+
+    var loadClosed = false;
+
+    // Display loading screen
+    var loadWindow = new BrowserWindow({
+      frame: false,
+      transparent: true,
+      width: 250,
+      height: 250,
+      resizable: false
+    });
+    loadWindow.loadFile('loading.html');
+    loadWindow.on('close', function(e) {
+      loadClosed = true;
+    });
+    loadWindow.focus(); // Place load window on top
 
     // Check if content loaded succesfully
     mainWindow.webContents.on("did-finish-load", function() {
       loaded = true; // Set page as loaded so it doesn't get closed by an error later on
+      mainWindow.maximize(); // Maximize window
       mainWindow.focus(); // Focus window for user
       mainWindow.show(); // Un-hide window
+
+      if (!loadClosed) loadWindow.close(); // Close loading window
     });
 
     // Check if content failed loading
