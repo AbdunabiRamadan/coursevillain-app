@@ -22,7 +22,7 @@
     "pack:macos": "electron-packager . CourseVillain --out=../CVDist --platform=darwin --arch=x64 --icon=buildResources/mac/icon.icns --overwrite",
     "pack:win32": "electron-packager . CourseVillain --out=../CVDist --platform=win32 --arch=ia32 --icon=buildResources/win/icon.ico --overwrite",
     "pack:win64": "electron-packager . CourseVillain --out=../CVDist --platform=win32 --arch=x64 --icon=buildResources/win/icon.ico --overwrite",
-    "build": "npm run pack:macos && npm run pack:win32 && npm run pack:win64"
+    "build": "npm run pack:macos && npm run pack:win32 && npm run pack:win64 && node build"
   },
   "build": {
     "appId": "com.coursevillain",
@@ -39,6 +39,7 @@
     }
   },
   "dependencies": {
+    "electron-winstaller": "^5.0.0",
     "moment": "^2.27.0",
     "puppeteer-firefox": "^0.5.0"
   },
