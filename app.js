@@ -1,5 +1,6 @@
 const { app, BrowserWindow, dialog, shell } = require('electron');
 const autoFormFilling = require('./autoFormFilling');
+const pie = require("puppeteer-in-electron");
 
 var mainWindow;
 var loaded = false;
@@ -88,6 +89,9 @@ function handleProtocolLink(link) {
 }
 
 app.setAsDefaultProtocolClient('coursevillain'); // Set protocol link (coursevillain://)
+
+// Initialize "puppeteer in electron" with app to be used later
+pie.initialize(app);
 
 if (!singleInstanceLock) {
   app.quit(); // Quit any additional instances opened. Below code catches additional instance.
