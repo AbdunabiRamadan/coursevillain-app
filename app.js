@@ -35,7 +35,7 @@ function createWindow () {
       height: 250,
       resizable: false
     });
-    loadWindow.loadFile('loading.html');
+    loadWindow.loadFile('appResources/loading.html');
     loadWindow.on('close', function(e) {
       loadClosed = true;
     });

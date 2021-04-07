@@ -19,12 +19,13 @@
   },
   "scripts": {
     "start": "electron .",
-    "pack:macos": "electron-packager . CourseVillain --out=../CVDist --platform=darwin --arch=x64 --icon=buildResources/mac/icon.icns --overwrite",
-    "pack:win32": "electron-packager . CourseVillain --out=../CVDist --platform=win32 --arch=ia32 --icon=buildResources/win/icon.ico --overwrite",
-    "pack:win64": "electron-packager . CourseVillain --out=../CVDist --platform=win32 --arch=x64 --icon=buildResources/win/icon.ico --overwrite",
-    "build": "npm run pack:macos && npm run pack:win32 && npm run pack:win64 && node build"
+    "pack:macos": "electron-packager . CourseVillain --out=../CVDist --platform=darwin --arch=x64 --icon=buildResources/mac/icon.icns --ignore=\".gitignore|package.json|package-lock.json|README.md|buildResources\" --overwrite",
+    "pack:win32": "electron-packager . CourseVillain --out=../CVDist --platform=win32 --arch=ia32 --icon=buildResources/win/icon.ico --ignore=\".gitignore|package-lock.json|README.md|buildResources\" --overwrite",
+    "pack:win64": "electron-packager . CourseVillain --out=../CVDist --platform=win32 --arch=x64 --icon=buildResources/win/icon.ico --ignore=\".gitignore|package-lock.json|README.md|buildResources\" --overwrite",
+    "build": "npm run pack:macos && npm run pack:win32 && npm run pack:win64 && node buildResources/win/build.js"
   },
   "build": {
+    "compression": "maximum",
     "appId": "com.coursevillain",
     "productName": "CourseVillain",
     "copyright": "Copyright © 2020 CourseVillain",
@@ -39,7 +40,6 @@
     }
   },
   "dependencies": {
-    "electron-winstaller": "^5.0.0",
     "moment": "^2.27.0",
     "puppeteer-core": "^8.0.0",
     "puppeteer-in-electron": "^3.0.3"
@@ -47,6 +47,7 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "^9.4.4",
-    "electron-packager": "^15.0.0"
+    "electron-packager": "^15.0.0",
+    "electron-winstaller": "^5.0.0"
   }
 }
