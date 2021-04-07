@@ -79,6 +79,8 @@ app.on('will-finish-launching', () => {
 });
 
 function handleProtocolLink(link) {
+  if (!link) return;
+  
   link = link.replace('coursevillain://',''); // Remove protocol from link
 
   if (link.includes("autoFormFilling")) {
