@@ -127,6 +127,10 @@ if (!singleInstanceLock) {
     }
   });
 
+  // On initial app startup, if there's a protocol link, use it!!
+  var potentialProtocolLink = process.argv.find(arg => arg.includes("coursevillain://"));
+  if (potentialProtocolLink) handleProtocolLink(potentialProtocolLink);
+
   app.whenReady().then(createWindow); // Start first instance of electron app
 }
 
