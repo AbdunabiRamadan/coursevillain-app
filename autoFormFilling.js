@@ -83,6 +83,11 @@ module.exports.asyncPuppeteer = async function (docURL, docName, docType, userNa
       // var frame = await iframeElement.contentFrame();
       // await frame.click('.recaptcha-checkbox-border');
 
+      // Scroll to bottom
+      await page.evaluate( () => {
+        window.scrollBy(0, window.innerHeight);
+      });
+
       dialog.showMessageBox({
         buttons: ["OK"],
         message: "The form has been filled out. Click the button that says \"I'm not a robot\", complete the challenge, and click \"Submit\" to finish."
