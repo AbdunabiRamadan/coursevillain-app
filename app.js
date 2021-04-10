@@ -209,7 +209,7 @@ async function checkNewVersion() {
     var currentVersion = response.data[0].tag_name;
 
     // Compare local and current version
-    if (localVersion == currentVersion) {
+    if (localVersion != currentVersion) {
       // Get user response
       var update = await dialog.showMessageBox({
         type: "info",
