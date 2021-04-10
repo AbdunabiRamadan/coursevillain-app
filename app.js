@@ -1,6 +1,8 @@
 const { app, BrowserWindow, dialog, shell } = require('electron');
 const autoFormFilling = require('./autoFormFilling');
 const pie = require("puppeteer-in-electron");
+const axios = require('axios');
+const package = require('./package.json');
 
 var mainWindow;
 var loaded = false;
@@ -67,6 +69,8 @@ function createWindow () {
       e.preventDefault();
       if (!url.includes(baseUrl)) shell.openExternal(url);
     });
+
+    checkNewVersion();
 }
 
 // Protocol link catching on Mac
@@ -197,3 +201,46 @@ function handleSquirrelEvent(application) {
       return true;
   }
 };
+
+// Check app for new versions
+async function checkNewVersion() {
+  await axios.get('https://api.github.com/repos/CourseVillain/coursevillain-app/releases').then(async function(response) {
+    var localVersion = package.version;
+    var currentVersion = response.data[0].tag_name;
+
+    // Compare local and current version
+    if (localVersion == currentVersion) {
+      // Get user response
+      var update = await dialog.showMessageBox({
+        type: "info",
+        noLink: true, // Traditional windows button style
+        buttons: ["Download", "Cancel"],
+        message: "There is an update for the CourseVillain app available. Please click below to download the update."
+      });
+
+      // User wants to update
+      if (update.response == 0) {
+        var url = "https://github.com/CourseVillain/coursevillain-app/releases";
+
+        // Get specific download file depending on OS. Search assets array for keywords 'mac' and 'windows'
+        var assets = response.data[0].assets;
+        switch(process.platform) {
+          case "win32":
+            var windowsAsset = assets.find(asset => asset.name.includes("windows")).browser_download_url;
+            if (windowsAsset) url = windowsAsset;
+            break;
+          case "darwin":
+            var macAsset = assets.find(asset => asset.name.includes("mac")).browser_download_url;
+            if (macAsset) url = macAsset;
+            break;
+        }
+
+        console.log(url);
+
+        require('electron').shell.openExternal(url);
+      }
+    }
+  }).catch(function(err) {
+    console.log("Error checking new version: ", err);
+  })
+}

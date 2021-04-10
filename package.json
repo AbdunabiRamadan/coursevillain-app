@@ -8,7 +8,7 @@
     "Leonard Brunotte"
   ],
   "description": "CourseVillain is a tool for professors and students at ERAU to use if they are running a course or are building a course to scrape the Course Hero website for ERAU content of a specific course and automate submission of the copyright infringement form.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "app.js",
   "repository": {
     "type": "git",
@@ -40,6 +40,7 @@
     }
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "moment": "^2.27.0",
     "puppeteer-core": "^8.0.0",
     "puppeteer-in-electron": "^3.0.3"
