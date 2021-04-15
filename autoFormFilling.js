@@ -1,6 +1,10 @@
 const {BrowserWindow, app, dialog} = require("electron");
 const pie = require("puppeteer-in-electron");
-const puppeteer = require("puppeteer-core");
+const puppeteer = require("puppeteer-extra");
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+
+// Use the "Stealth Plugin" to bypass Incapsula. This is the page that says "Additional security check is required". Using this plugin disguises the browser so the website can't recognize that it's Puppeteer and Electron
+puppeteer.use(StealthPlugin());
 
 // Use existing Electron Chrome instance to load form in new page and automate submission.
 module.exports.asyncPuppeteer = async function (docURL, docName, docType, userName, userRelationship, userEmail, callback) {
